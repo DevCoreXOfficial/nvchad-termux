@@ -6,4 +6,4 @@ fi
 
 cp -r ./nvim ~/.config
 
-nvim -c "MasonInstallAll"
+nvim

@@ -1,19 +1,14 @@
 return {
-  -- Plugins existentes
+  -- LSP and related plugins
   {
-    "stevearc/conform.nvim",
-    opts = require "configs.conform",
-  },
-
-  {
-    "neovim/nvim-lspconfig",
+    "neovim/nvim-lspconfig", -- LSP configuration
     config = function()
       require "configs.lspconfig"
     end,
   },
 
   {
-    "williamboman/mason.nvim",
+    "williamboman/mason.nvim", -- LSP server manager
     opts = {
       ensure_installed = {
         "html-lsp",
@@ -27,8 +22,9 @@ return {
     },
   },
 
+  -- Treesitter configuration
   {
-    "nvim-treesitter/nvim-treesitter",
+    "nvim-treesitter/nvim-treesitter", -- Syntax highlighting
     opts = {
       ensure_installed = {
         "vim",
@@ -43,21 +39,50 @@ return {
         "tsx",
         "gitignore",
       },
+      highlight = {
+        enable = true,
+      },
     },
   },
 
-  -- Agregar nvim-cmp y sus dependencias
+  -- Plugin for automatic HTML/JSX tag completion
   {
-    "hrsh7th/nvim-cmp", -- El plugin principal
-    event = "InsertEnter", -- Se carga cuando entras en modo Insert
+    "windwp/nvim-ts-autotag", -- Automatically close and rename HTML/JSX tags
+    event = "InsertEnter",
     config = function()
-      require "configs.cmp" -- Cargar la configuración de nvim-cmp
+      require("nvim-ts-autotag").setup()
+    end,
+  },
+
+  -- Autocompletion and snippets plugins
+  {
+    "hrsh7th/nvim-cmp", -- Main autocompletion plugin
+    event = "InsertEnter", -- Load when entering Insert mode
+    config = function()
+      require "configs.cmp" -- Load nvim-cmp configuration
     end,
     requires = {
-      "hrsh7th/cmp-buffer", -- Fuente para el buffer actual (historial de código)
-      "hrsh7th/cmp-nvim-lsp", -- Fuente para LSP (autocompletado inteligente)
-      "hrsh7th/cmp-path", -- Fuente para autocompletado de rutas
-      "saadparwaiz1/cmp_luasnip", -- Si usas snippets con LuaSnip
+      "hrsh7th/cmp-buffer", -- Buffer completions
+      "hrsh7th/cmp-nvim-lsp", -- LSP completions
+      "hrsh7th/cmp-path", -- Path completions
+      "saadparwaiz1/cmp_luasnip", -- LuaSnip completions
     },
+  },
+
+  -- NeoAI - OpenAI
+  -- NOTE: set the OPENAI_API_KEY environment variable
+  {
+    "Bryley/neoai.nvim",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    event = "VeryLazy",
+    config = function()
+      require("neoai").setup()
+    end,
+  },
+
+  -- Conform plugin (formatting)
+  {
+    "stevearc/conform.nvim", -- Formatter for Neovim
+    opts = require "configs.conform",
   },
 }

@@ -7,7 +7,7 @@ local lspconfig = require "lspconfig"
 local servers = { "html", "cssls", "ts_ls", "tailwindcss" }
 local nvlsp = require "nvchad.configs.lspconfig"
 
--- lsps with default config
+-- lsps with default config (all)
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     on_attach = nvlsp.on_attach,
@@ -16,7 +16,7 @@ for _, lsp in ipairs(servers) do
   }
 end
 
--- configuring single server, example: typescript
+-- configuring single server (custom) - typescript
  lspconfig.ts_ls.setup {
    on_attach = nvlsp.on_attach,
    on_init = nvlsp.on_init,

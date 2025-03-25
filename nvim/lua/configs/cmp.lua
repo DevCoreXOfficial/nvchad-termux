@@ -1,64 +1,81 @@
 local cmp = require "cmp"
+local luasnip = require "luasnip"
 
 cmp.setup {
-  -- Fuentes de autocompletado
+  -- Sources for autocompletion
   sources = {
-    { name = "nvim_lsp" }, -- LSP
-    { name = "buffer" }, -- Código del buffer actual
-    { name = "path" }, -- Rutas de archivos
-    { name = "luasnip" }, -- Snippets (si usas LuaSnip)
+    { name = "nvim_lsp" }, -- Language Server Protocol (LSP)
+    { name = "buffer" }, -- Current buffer content
+    { name = "path" }, -- File paths
+    { name = "luasnip" }, -- Snippets from LuaSnip
   },
 
-  -- Configuración de mapeos (atajos de teclado)
+  -- Key mappings for autocompletion
   mapping = {
-    ["<C-d>"] = cmp.mapping.scroll_docs(-4), -- Desplazar hacia arriba en la documentación
-    ["<C-f>"] = cmp.mapping.scroll_docs(4), -- Desplazar hacia abajo en la documentación
-    ["<C-Space>"] = cmp.mapping.complete(), -- Activar el autocompletado manualmente
-    ["<CR>"] = cmp.mapping.confirm { select = true }, -- Confirmar selección (Enter)
+    -- Scroll documentation
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
 
-    -- Teclas para navegar por las opciones de autocompletado
+    -- Trigger completion manually
+    ["<C-Space>"] = cmp.mapping.complete(),
+
+    -- Confirm selection
+    ["<CR>"] = cmp.mapping.confirm { select = true },
+
+    -- Navigate completion options using Tab and Shift+Tab
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_next_item() -- Seleccionar la siguiente opción
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump() -- Expand or jump through snippet placeholders
       else
-        fallback() -- Si no hay opciones, hacer lo que la tecla Tab haría normalmente
+        fallback()
       end
     end, { "i", "s" }),
 
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_prev_item() -- Seleccionar la opción anterior
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1) -- Jump backwards through snippet placeholders
       else
-        fallback() -- Si no hay opciones, hacer lo que la tecla Shift + Tab haría normalmente
+        fallback()
       end
     end, { "i", "s" }),
 
-    -- Navegación con flechas
+    -- Navigate with arrow keys
     ["<Down>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_next_item() -- Seleccionar la siguiente opción con la flecha hacia abajo
+        cmp.select_next_item()
       else
-        fallback() -- Si no hay opciones, hacer lo que la flecha hacia abajo haría normalmente
+        fallback()
       end
     end, { "i", "s" }),
 
     ["<Up>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_prev_item() -- Seleccionar la opción anterior con la flecha hacia arriba
+        cmp.select_prev_item()
       else
-        fallback() -- Si no hay opciones, hacer lo que la flecha hacia arriba haría normalmente
+        fallback()
       end
     end, { "i", "s" }),
   },
 
-  -- Configuración de ventanas (autocompletado y documentación)
-  window = {
-    documentation = cmp.config.window.bordered(),
-    completion = cmp.config.window.bordered(),
+  -- Snippet configuration
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body) -- Expand snippet using LuaSnip
+    end,
   },
 
-  -- Otras configuraciones experimentales
+  -- Window appearance for completion and documentation
+  window = {
+    completion = cmp.config.window.bordered(), -- Bordered completion menu
+    documentation = cmp.config.window.bordered(), -- Bordered documentation window
+  },
+
+  -- Experimental features
   experimental = {
-    ghost_text = true, -- Mostrar texto fantasma de las sugerencias mientras escribes
+    ghost_text = true, -- Show ghost text suggestions while typing
   },
 }

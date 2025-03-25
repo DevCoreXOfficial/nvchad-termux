@@ -1,11 +1,15 @@
-require "nvchad.mappings" -- Asegúrate de mantener la configuración de mapeos predeterminada
+require "nvchad.mappings"
 
--- Crear el objeto de mapeo para hacer más sencilla la adición de teclas
 local map = vim.keymap.set
 
--- Mapeo para ejecutar Prettier en el archivo actual
-map("n", "<leader>fn", ":!prettier --write %<CR>", { desc = "Format with Prettier" })
-
--- Otros mapeos que ya tenías
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
+
+-- Prettier File
+map("n", "<leader>fn", ":!prettier --write %<CR>", { desc = "Format with Prettier" })
+
+-- NeoAi Toggle Window
+vim.api.nvim_set_keymap("n", "<Space>ai", ":NeoAIToggle<CR>", { noremap = true, silent = true })
+
+-- NeoAI Context Window
+vim.api.nvim_set_keymap("n", "<Space>ac", ":NeoAIContextOpen<CR>", { noremap = true, silent = true })

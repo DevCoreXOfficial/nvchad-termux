@@ -87,6 +87,7 @@ local jsx_tsx_snippets = {
   s("article", { t { "<article>" }, i(0), t { "</article>" } }),
   s("aside", { t { "<aside>" }, i(0), t { "</aside>" } }),
   s("main", { t { "<main>" }, i(0), t { "</main>" } }),
+  s("div", { t { "<div>" }, i(0), t { "</div>" } }),
   s("figure", { t { "<figure>" }, i(0), t { "</figure>" } }),
   s("figcaption", { t { "<figcaption>" }, i(0), t { "</figcaption>" } }),
   s("details", { t { "<details>" }, i(0), t { "</details>" } }),

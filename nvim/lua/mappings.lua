@@ -6,10 +6,13 @@ map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
 -- Prettier Formatter
-map("n", "<leader>fn", ":%!prettier --stdin-filepath %<CR>", { desc = "Format with Prettier" })
+map("n", "<leader>fp", ":%!prettier --stdin-filepath %<CR>", { desc = "Format with Prettier" })
 
 -- NeoAi Toggle Window
-vim.api.nvim_set_keymap("n", "<Space>ai", ":NeoAIToggle<CR>", { noremap = true, silent = true })
+map("n", "<Space>ai", ":NeoAIToggle<CR>", { noremap = true, silent = true })
 
 -- NeoAI Context Window
-vim.api.nvim_set_keymap("n", "<Space>ac", ":NeoAIContextOpen<CR>", { noremap = true, silent = true })
+map("n", "<Space>ac", ":NeoAIContextOpen<CR>", { noremap = true, silent = true })
+
+-- Neural Open Chat
+map("n", "<leader>ne", ":Neural<CR>", { noremap = true, silent = true })

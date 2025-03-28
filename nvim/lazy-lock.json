@@ -17,6 +17,7 @@
   "menu": { "branch": "main", "commit": "7769b17c2a131108c02b10e9f844e504aa605cc2" },
   "minty": { "branch": "main", "commit": "aafc9e8e0afe6bf57580858a2849578d8d8db9e0" },
   "neoai.nvim": { "branch": "main", "commit": "248c2001d0b24e58049eeb6884a79860923cfe13" },
+  "neural": { "branch": "main", "commit": "f53af0007124517a46b99a4d49b86087e426bfef" },
   "nui.nvim": { "branch": "main", "commit": "8d3bce9764e627b62b07424e0df77f680d47ffdb" },
   "nvim-autopairs": { "branch": "master", "commit": "6522027785b305269fa17088395dfc0f456cedd2" },
   "nvim-cmp": { "branch": "main", "commit": "1e1900b0769324a9675ef85b38f99cca29e203b3" },

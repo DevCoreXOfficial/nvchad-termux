@@ -69,8 +69,14 @@ return {
     },
   },
 
+  -- Conform plugin (formatting)
+  {
+    "stevearc/conform.nvim", -- Formatter for Neovim
+    opts = require "configs.conform",
+  },
+
   -- NeoAI - OpenAI
-  -- NOTE: set the OPENAI_API_KEY environment variable
+  -- NOTE: set the OPENAI_API_KEY
   {
     "Bryley/neoai.nvim",
     dependencies = { "MunifTanjim/nui.nvim" },
@@ -80,18 +86,39 @@ return {
     end,
   },
 
-  -- Conform plugin (formatting)
-  {
-    "stevearc/conform.nvim", -- Formatter for Neovim
-    opts = require "configs.conform",
-  },
-
   -- GitHub Copilot
+  -- Auth Command: :Copilot setup
   {
     "github/copilot.vim",
     lazy = false,
     config = function()
       vim.g.copilot_no_tab_map = true
+    end,
+  },
+
+  -- Neural - OpenAI
+  -- NOTE: set the OPENAI_API_KEY
+  {
+    "dense-analysis/neural",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
+    event = "VeryLazy",
+    config = function()
+      require("neural").setup {
+        openai = {
+          api_key = vim.env.OPENAI_API_KEY,
+          max_tokens = 1000,
+          temperature = 0.7,
+        },
+        ui = {
+          icon = "🤖",
+          keymaps = {
+            close = "<Esc>",
+            submit = "<Enter>",
+          },
+        },
+      }
     end,
   },
 }

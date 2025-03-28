@@ -59,6 +59,16 @@ Execute the main script to install:
 
 ---
 
+## **💻 Update**
+
+1. **Run the Update Script**
+
+    ```bash
+    bash update.sh
+    ```
+
+---
+
 ## **📞 Support**
 
 NvChad-Termux is developed and maintained by DevCoreX. For support, suggestions, or contributions:

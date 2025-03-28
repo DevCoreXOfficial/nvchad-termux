@@ -8,7 +8,7 @@ cmp.setup {
     { name = "buffer" }, -- Current buffer content
     { name = "path" }, -- File paths
     { name = "luasnip" }, -- Snippets from LuaSnip
-    { name = "copilot"}, -- Github Copilot
+    { name = "copilot" }, -- Github Copilot
   },
 
   -- Key mappings for autocompletion

@@ -23,8 +23,8 @@ npm_installed "prettier" || npm install -g prettier
 # Ensure the configuration directory exists
 [ -d ~/.config ] || mkdir -p ~/.config
 
-# Copy Neovim configuration if not already present
-[ -d ~/.config/nvim ] || cp -r ./nvim ~/.config
+# Copy Neovim configuration
+cp -r ./nvim ~/.config
 
 # Start Neovim
 nvim

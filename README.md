@@ -10,6 +10,8 @@
 
 - NeoAI with OpenAI API Key Integration.
 
+- Neural AI with OpenAI API Key Integration.
+
 - Language Servers (LSP) for HTML, CSS, JavaScript/TypeScript, TailwindCSS, and Lua.
 
 - Prettier for Code Formatting.

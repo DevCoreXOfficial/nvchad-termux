@@ -16,3 +16,6 @@ map("n", "<Space>ac", ":NeoAIContextOpen<CR>", { noremap = true, silent = true }
 
 -- Neural Open Chat
 map("n", "<leader>ne", ":Neural<CR>", { noremap = true, silent = true })
+
+-- Bash Script Formatter
+map("n", "<leader>fs", ":%!shfmt<CR>", { desc = "Format Bash script with shfmt", noremap = true, silent = true })

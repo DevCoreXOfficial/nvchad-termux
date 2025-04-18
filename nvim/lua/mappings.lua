@@ -19,3 +19,6 @@ map("n", "<leader>ne", ":Neural<CR>", { noremap = true, silent = true })
 
 -- Bash Script Formatter
 map("n", "<leader>fs", ":%!shfmt<CR>", { desc = "Format Bash script with shfmt", noremap = true, silent = true })
+
+-- Postgresql Formatter
+map("n", "<leader>fq", ":%!psqlformat --spaces=2 %<CR>", { desc = "Format with psqlformat" })

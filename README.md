@@ -28,6 +28,10 @@
 
 - Integrated File Explorer
 
+- Bash Script Formatter
+
+- SQL Formatter
+
 ---
 
 ## **📋 Prerequisites**

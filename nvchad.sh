@@ -13,7 +13,7 @@ npm_installed() {
 }
 
 # Install required Termux packages if not already installed
-for package in git neovim nodejs python curl wget lua-language-server ripgrep stylua tree-sitter-parsers; do
+for package in git neovim nodejs python perl curl wget lua-language-server ripgrep stylua tree-sitter-parsers; do
   is_installed "$package" || yes | pkg install "$package"
 done
 

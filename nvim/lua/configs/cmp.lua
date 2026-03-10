@@ -1,6 +1,9 @@
 local cmp = require "cmp"
 local luasnip = require "luasnip"
 
+-- Cargar snippets personalizados
+require "configs.snippets"
+
 cmp.setup {
   -- Sources for autocompletion
   sources = {

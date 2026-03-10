@@ -1,29 +1,10 @@
--- Load defaults from NvChad (configura on_attach, on_init, capabilities)
-require("nvchad.configs.lspconfig").defaults()
+-- Configuración para TypeScript Language Server (ts_ls)
+-- Requiere: typescript-language-server instalado via Mason
 
 local nvlsp = require "nvchad.configs.lspconfig"
 
--- Lista de servidores LSP
-local servers = {
-  "html",
-  "cssls",
-  "ts_ls",
-  "tailwindcss",
-}
-
--- Configurar servidores con API moderna vim.lsp.config (Neovim 0.11+)
--- Usar las capacidades de NvChad que ya incluyen snippetSupport
-for _, lsp in ipairs(servers) do
-  vim.lsp.config(lsp, {
-    on_attach = nvlsp.on_attach,
-    on_init = nvlsp.on_init,
-    capabilities = nvlsp.capabilities,
-  })
-  vim.lsp.enable(lsp)
-end
-
--- Configuración personalizada para ts_ls
-vim.lsp.config("ts_ls", {
+return {
+  cmd = { "typescript-language-server", "--stdio" },
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
@@ -51,4 +32,4 @@ vim.lsp.config("ts_ls", {
       },
     },
   },
-})
+}

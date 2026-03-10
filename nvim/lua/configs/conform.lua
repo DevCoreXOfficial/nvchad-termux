@@ -1,16 +1,23 @@
+-- Configuración principal de conform.nvim
+-- Este archivo carga las configuraciones de formatters por tipo de archivo
+
 local options = {
   formatters_by_ft = {
     lua = { "stylua" },
-    javascript = { "eslint_d" },
-    typescript = { "eslint_d" },
-    javascriptreact = { "eslint_d" },
-    typescriptreact = { "eslint_d" },
+    javascript = { "prettier" },
+    typescript = { "prettier" },
+    javascriptreact = { "prettier" },
+    typescriptreact = { "prettier" },
     css = { "prettier" },
     html = { "prettier" },
+    json = { "prettier" },
+    markdown = { "prettier" },
+    yaml = { "prettier" },
+    bash = { "shfmt" },
+    sql = { "pg_format" },
   },
 
   -- format_on_save = {
-  --   -- These options will be passed to conform.format()
   --   timeout_ms = 500,
   --   lsp_fallback = true,
   -- },

@@ -46,6 +46,11 @@
 - **shfmt** - Bash/Shell script formatting
 - **pg_format** - SQL formatting
 
+### 🌳 Syntax & Navigation
+- **Treesitter** - Advanced syntax highlighting and code navigation
+- **Incremental Selection** - Expand/shrink code selections with `<C-space>` / `<bs>`
+- **Auto-closing Tags** - HTML/JSX tag auto-completion
+
 ### 🖥 UI Enhancements
 - **Eldritch Theme** - Dark, eye-friendly color scheme
 - **bufferline.nvim** - Tab-like buffer management
@@ -347,6 +352,33 @@ To change provider, use `<leader>as` or configure the default adapter in `lua/pl
 | Markdown | - | Prettier | Formatting |
 | YAML | - | Prettier | Formatting |
 
+### Treesitter Syntax Support
+
+Treesitter provides enhanced syntax highlighting and code navigation for:
+
+**Web Development:**
+- HTML, CSS, SCSS
+- JavaScript, TypeScript, TSX, JSX
+
+**Backend & Scripting:**
+- Bash, Shell
+
+**Data & Documentation:**
+- JSON, YAML, TOML
+- Markdown, Markdown Inline
+
+**Development Tools:**
+- Lua, Vim, Vimdoc
+- SQL, Dockerfile
+- Gitignore, Regex, Query
+
+**Keybindings:**
+
+| Key | Description |
+|-----|-------------|
+| `<C-space>` | Incremental selection (expand) |
+| `<bs>` | Decremental selection (shrink) |
+
 ### Inlay Hints (TypeScript/JavaScript)
 
 The configuration enables rich inlay hints for better code understanding:
@@ -598,8 +630,8 @@ nvim
 ### LSP & Syntax
 - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) - LSP configuration
 - [mason.nvim](https://github.com/williamboman/mason.nvim) - LSP installer
-- [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) - Syntax highlighting
-- [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag) - Auto-close tags
+- [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) - Syntax highlighting, incremental selection, indent
+- [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag) - Auto-close HTML/JSX tags
 
 ### Formatting
 - [conform.nvim](https://github.com/stevearc/conform.nvim) - Code formatter

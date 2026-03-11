@@ -185,11 +185,11 @@ nvim/
 
 | Key | Description |
 |-----|-------------|
-| `<leader>aa` | CodeCompanion: Abrir chat |
-| `<leader>ai` | CodeCompanion: Transformar/crear código inline |
-| `<leader>at` | CodeCompanion: Toggle chat (mostrar/ocultar) |
-| `<leader>am` | CodeCompanion: Menú de acciones |
-| `<leader>as` | CodeCompanion: Cambiar adapter/proveedor |
+| `<leader>aa` | CodeCompanion: Open chat |
+| `<leader>ai` | CodeCompanion: Transform/create inline code |
+| `<leader>at` | CodeCompanion: Toggle chat (show/hide) |
+| `<leader>am` | CodeCompanion: Actions menu |
+| `<leader>as` | CodeCompanion: Change adapter/provider |
 
 ### GitHub Copilot (Insert Mode)
 
@@ -247,86 +247,86 @@ nvim/
 
 ### GitHub Copilot
 
-Copilot proporciona sugerencias de código en tiempo real mientras escribes.
+Copilot provides real-time code suggestions as you type.
 
-**Configuración:**
+**Setup:**
 ```bash
-# Autenticar con GitHub
+# Authenticate with GitHub
 copilot setup
 ```
 
-**Uso:**
-- Escribe código naturalmente y acepta sugerencias con `Ctrl+l`
+**Usage:**
+- Write code naturally and accept suggestions with `Ctrl+l`
 - Cycle through suggestions with `Ctrl+j` / `Ctrl+k`
-- Descartar con `Ctrl+h`
+- Dismiss with `Ctrl+h`
 
 ### CodeCompanion
 
-CodeCompanion es un asistente de IA multiproveedor que soporta OpenAI, Mistral, Anthropic y más.
+CodeCompanion is a multi-provider AI assistant that supports OpenAI, Mistral, Anthropic, and more.
 
-**Configuración:**
+**Setup:**
 
-1. **Instala el plugin** (ya está incluido en esta configuración)
+1. **Install the plugin** (already included in this configuration)
 
-2. **Configura tus claves de API** según el proveedor que quieras usar:
+2. **Configure your API keys** based on the provider you want to use:
 
    ```bash
    # OpenAI
-   export OPENAI_API_KEY="tu-clave-aqui"
-   
+   export OPENAI_API_KEY="your-key-here"
+
    # Mistral AI
-   export MISTRAL_API_KEY="tu-clave-aqui"
-   
+   export MISTRAL_API_KEY="your-key-here"
+
    # Anthropic (Claude)
-   export ANTHROPIC_API_KEY="tu-clave-aqui"
+   export ANTHROPIC_API_KEY="your-key-here"
    ```
 
-3. **Configuración por defecto:** El plugin está configurado para usar Mistral AI como adapter predeterminado (recomendado para Termux).
+3. **Default configuration:** The plugin is configured to use Mistral AI as the default adapter (recommended for Termux).
 
-**Comandos principales:**
+**Main commands:**
 
-| Comando | Descripción |
+| Command | Description |
 |---------|-------------|
-| `:CodeCompanionChat` | Abrir chat de IA |
-| `:CodeCompanion` | Modo inline (transformar código) |
-| `:CodeCompanionChat -t` | Toggle chat (mostrar/ocultar) |
-| `:CodeCompanionActions` | Abrir menú de acciones |
-| `:CodeCompanionChat -s` | Cambiar adapter/proveedor |
+| `:CodeCompanionChat` | Open AI chat |
+| `:CodeCompanion` | Inline mode (transform code) |
+| `:CodeCompanionChat -t` | Toggle chat (show/hide) |
+| `:CodeCompanionActions` | Open actions menu |
+| `:CodeCompanionChat -s` | Change adapter/provider |
 
-**Uso con keybindings:**
+**Usage with keybindings:**
 
-- `<leader>aa` - Abrir chat (en modo normal o con selección en modo visual)
-- `<leader>ai` - Transformar código seleccionado o crear nuevo código inline
-- `<leader>at` - Mostrar/ocultar chat
-- `<leader>am` - Abrir menú de acciones (slash commands, agentes, etc.)
-- `<leader>as` - Cambiar de proveedor de IA
+- `<leader>aa` - Open chat (in normal mode or with selection in visual mode)
+- `<leader>ai` - Transform selected code or create new inline code
+- `<leader>at` - Show/hide chat
+- `<leader>am` - Open actions menu (slash commands, agents, etc.)
+- `<leader>as` - Change AI provider
 
-**Ejemplos de uso:**
+**Usage examples:**
 
 ```vim
-" Abrir chat directamente
+" Open chat directly
 :CodeCompanionChat
 
-" Transformar código seleccionado (modo visual)
-" 1. Selecciona código
-" 2. Presiona <leader>ai
-" 3. Escribe tu prompt
+" Transform selected code (visual mode)
+" 1. Select code
+" 2. Press <leader>ai
+" 3. Type your prompt
 
-" Crear código nuevo inline
-" 1. Posiciona el cursor donde quieras el código
-" 2. Presiona <leader>ai
-" 3. Describe qué código necesitas
+" Create new inline code
+" 1. Position cursor where you want the code
+" 2. Press <leader>ai
+" 3. Describe what code you need
 ```
 
-**Proveedores soportados:**
+**Supported providers:**
 
-| Proveedor | Modelo por defecto | Variable de entorno |
+| Provider | Default Model | Environment Variable |
 |-----------|-------------------|---------------------|
 | Mistral AI | mistral-large-latest | MISTRAL_API_KEY |
 | OpenAI | gpt-4o | OPENAI_API_KEY |
 | Anthropic | claude-sonnet-4-20250514 | ANTHROPIC_API_KEY |
 
-Para cambiar de proveedor, usa `<leader>as` o configura el adapter por defecto en `lua/plugins/ai/init.lua`.
+To change provider, use `<leader>as` or configure the default adapter in `lua/plugins/ai/init.lua`.
 
 ---
 

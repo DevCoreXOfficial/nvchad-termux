@@ -67,6 +67,9 @@ return {
     "windwp/nvim-ts-autotag",
     event = "InsertEnter",
     opts = {},
+    config = function(_, opts)
+      require("nvim-ts-autotag").setup(opts)
+    end,
   },
 
   -- Diagnóstico y UI de LSP

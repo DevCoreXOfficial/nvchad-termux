@@ -49,16 +49,6 @@ return {
       enable = true,
     },
 
-    -- Autocierre de etiquetas HTML/JSX
-    autopairs = {
-      enable = true,
-    },
-
-    -- Autocierre de tags HTML
-    autotag = {
-      enable = true,
-    },
-
     -- Incremental selection
     incremental_selection = {
       enable = true,

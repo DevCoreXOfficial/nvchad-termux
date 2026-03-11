@@ -1,5 +1,5 @@
 -- Plugins de IA y asistencia de código
--- GitHub Copilot, NeoAI, Neural, etc.
+-- GitHub Copilot y CodeCompanion
 
 return {
   -- GitHub Copilot
@@ -11,36 +11,78 @@ return {
     end,
   },
 
-  -- NeoAI - Integración con OpenAI
+  -- CodeCompanion - Asistente de IA multiproveedor
   {
-    "Bryley/neoai.nvim",
-    dependencies = { "MunifTanjim/nui.nvim" },
-    event = "VeryLazy",
-    opts = {},
-  },
-
-  -- Neural - Otra integración con OpenAI
-  {
-    "dense-analysis/neural",
+    "olimorris/codecompanion.nvim",
     dependencies = {
-      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "stevearc/dressing.nvim", -- opcional, para mejor UI
     },
     event = "VeryLazy",
     config = function()
-      require("neural").setup {
-        openai = {
-          api_key = vim.env.OPENAI_API_KEY,
-          max_tokens = 1000,
-          temperature = 0.7,
+      require("codecompanion").setup({
+        adapters = {
+          -- OpenAI
+          openai = function()
+            return require("codecompanion.adapters").extend("openai", {
+              env = {
+                api_key = "OPENAI_API_KEY",
+              },
+              schema = {
+                model = {
+                  default = "gpt-4o",
+                },
+              },
+            })
+          end,
+          -- Mistral AI
+          mistral = function()
+            return require("codecompanion.adapters").extend("openai_compatible", {
+              name = "Mistral",
+              env = {
+                api_key = "MISTRAL_API_KEY",
+              },
+              schema = {
+                model = {
+                  default = "mistral-large-latest",
+                },
+                api_base = {
+                  default = "https://api.mistral.ai/v1",
+                },
+              },
+            })
+          end,
+          -- Anthropic (Claude)
+          anthropic = function()
+            return require("codecompanion.adapters").extend("anthropic", {
+              env = {
+                api_key = "ANTHROPIC_API_KEY",
+              },
+              schema = {
+                model = {
+                  default = "claude-sonnet-4-20250514",
+                },
+              },
+            })
+          end,
         },
-        ui = {
-          icon = "🤖",
-          keymaps = {
-            close = "<Esc>",
-            submit = "<Enter>",
+        strategies = {
+          chat = {
+            adapter = "mistral", -- adapter por defecto (Mistral funciona mejor en Termux)
+          },
+          inline = {
+            adapter = "mistral",
           },
         },
-      }
+        opts = {
+          display = {
+            chat = {
+              show_settings = true,
+            },
+          },
+        },
+      })
     end,
   },
 }

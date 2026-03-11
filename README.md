@@ -26,8 +26,7 @@
 
 ### 🤖 AI Integration
 - **GitHub Copilot** - Real-time AI code suggestions with custom keybindings
-- **NeoAI** - OpenAI integration with toggleable chat window
-- **Neural** - Additional OpenAI-powered assistant
+- **CodeCompanion** - Multi-provider AI chat assistant (OpenAI, Mistral, Anthropic, etc.)
 
 ### 📝 Code Completion
 - **nvim-cmp** - Intelligent autocompletion engine
@@ -133,7 +132,7 @@ nvim/
 │   │   ├── lazy.lua         # lazy.nvim settings
 │   │   └── ui.lua           # UI plugin settings
 │   └── plugins/
-│       ├── ai/              # AI plugins (Copilot, NeoAI, Neural)
+│       ├── ai/              # AI plugins (Copilot, CodeCompanion)
 │       ├── completion/      # Completion plugins (nvim-cmp, LuaSnip)
 │       ├── formatting/      # Formatting plugins (conform.nvim)
 │       ├── lsp/             # LSP plugins (lspconfig, mason, treesitter)
@@ -186,9 +185,11 @@ nvim/
 
 | Key | Description |
 |-----|-------------|
-| `<Space>ai` | Toggle NeoAI window |
-| `<Space>ac` | Open NeoAI context window |
-| `<leader>ne` | Open Neural chat |
+| `<leader>aa` | CodeCompanion: Abrir chat |
+| `<leader>ai` | CodeCompanion: Transformar/crear código inline |
+| `<leader>at` | CodeCompanion: Toggle chat (mostrar/ocultar) |
+| `<leader>am` | CodeCompanion: Menú de acciones |
+| `<leader>as` | CodeCompanion: Cambiar adapter/proveedor |
 
 ### GitHub Copilot (Insert Mode)
 
@@ -246,52 +247,86 @@ nvim/
 
 ### GitHub Copilot
 
-Copilot provides real-time code suggestions as you type.
+Copilot proporciona sugerencias de código en tiempo real mientras escribes.
 
-**Setup:**
+**Configuración:**
 ```bash
-# Authenticate with GitHub
+# Autenticar con GitHub
 copilot setup
 ```
 
-**Usage:**
-- Type code naturally and accept suggestions with `Ctrl+l`
+**Uso:**
+- Escribe código naturalmente y acepta sugerencias con `Ctrl+l`
 - Cycle through suggestions with `Ctrl+j` / `Ctrl+k`
-- Dismiss with `Ctrl+h`
+- Descartar con `Ctrl+h`
 
-### NeoAI (OpenAI)
+### CodeCompanion
 
-Interactive AI chat within Neovim.
+CodeCompanion es un asistente de IA multiproveedor que soporta OpenAI, Mistral, Anthropic y más.
 
-**Setup:**
-```bash
-# Set your OpenAI API key
-export OPENAI_API_KEY="your-api-key-here"
-```
+**Configuración:**
 
-**Commands:**
-- `<Space>ai` - Toggle the AI chat window
-- `<Space>ac` - Open context-aware AI panel
+1. **Instala el plugin** (ya está incluido en esta configuración)
 
-**Example Usage:**
+2. **Configura tus claves de API** según el proveedor que quieras usar:
+
+   ```bash
+   # OpenAI
+   export OPENAI_API_KEY="tu-clave-aqui"
+   
+   # Mistral AI
+   export MISTRAL_API_KEY="tu-clave-aqui"
+   
+   # Anthropic (Claude)
+   export ANTHROPIC_API_KEY="tu-clave-aqui"
+   ```
+
+3. **Configuración por defecto:** El plugin está configurado para usar Mistral AI como adapter predeterminado (recomendado para Termux).
+
+**Comandos principales:**
+
+| Comando | Descripción |
+|---------|-------------|
+| `:CodeCompanionChat` | Abrir chat de IA |
+| `:CodeCompanion` | Modo inline (transformar código) |
+| `:CodeCompanionChat -t` | Toggle chat (mostrar/ocultar) |
+| `:CodeCompanionActions` | Abrir menú de acciones |
+| `:CodeCompanionChat -s` | Cambiar adapter/proveedor |
+
+**Uso con keybindings:**
+
+- `<leader>aa` - Abrir chat (en modo normal o con selección en modo visual)
+- `<leader>ai` - Transformar código seleccionado o crear nuevo código inline
+- `<leader>at` - Mostrar/ocultar chat
+- `<leader>am` - Abrir menú de acciones (slash commands, agentes, etc.)
+- `<leader>as` - Cambiar de proveedor de IA
+
+**Ejemplos de uso:**
+
 ```vim
-:NeoAIToggle
-:NeoAIContextOpen
+" Abrir chat directamente
+:CodeCompanionChat
+
+" Transformar código seleccionado (modo visual)
+" 1. Selecciona código
+" 2. Presiona <leader>ai
+" 3. Escribe tu prompt
+
+" Crear código nuevo inline
+" 1. Posiciona el cursor donde quieras el código
+" 2. Presiona <leader>ai
+" 3. Describe qué código necesitas
 ```
 
-### Neural
+**Proveedores soportados:**
 
-Alternative OpenAI integration with customizable settings.
+| Proveedor | Modelo por defecto | Variable de entorno |
+|-----------|-------------------|---------------------|
+| Mistral AI | mistral-large-latest | MISTRAL_API_KEY |
+| OpenAI | gpt-4o | OPENAI_API_KEY |
+| Anthropic | claude-sonnet-4-20250514 | ANTHROPIC_API_KEY |
 
-**Setup:**
-```bash
-export OPENAI_API_KEY="your-api-key-here"
-```
-
-**Usage:**
-```vim
-:Neural
-```
+Para cambiar de proveedor, usa `<leader>as` o configura el adapter por defecto en `lua/plugins/ai/init.lua`.
 
 ---
 
@@ -507,14 +542,16 @@ nvim --headless "+Lazy! sync" +qa
 
 Use `I` to install servers interactively.
 
-### API Key Issues (AI)
+### API Key Issues (CodeCompanion)
 
 ```bash
-# Verify API key is set
+# Verify API keys are set
+echo $MISTRAL_API_KEY
 echo $OPENAI_API_KEY
+echo $ANTHROPIC_API_KEY
 
 # Re-export if needed
-export OPENAI_API_KEY="your-key"
+export MISTRAL_API_KEY="your-key"
 ```
 
 ### Performance Issues
@@ -550,8 +587,8 @@ nvim
 
 ### AI
 - [copilot.vim](https://github.com/github/copilot.vim) - GitHub Copilot
-- [neoai.nvim](https://github.com/Bryley/neoai.nvim) - OpenAI chat
-- [neural](https://github.com/dense-analysis/neural) - AI assistant
+- [codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim) - Multi-provider AI chat assistant
+- [plenary.nvim](https://github.com/nvim-lua/plenary.nvim) - Lua utility library (CodeCompanion dependency)
 
 ### Completion
 - [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) - Completion engine

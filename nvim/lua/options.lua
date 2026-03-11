@@ -7,6 +7,34 @@ local o = vim.opt
 local g = vim.g
 
 -- ============================================
+-- Fix para Termux/Android - Directorio temporal
+-- ============================================
+
+-- /tmp no existe en Android, usar ~/.cache/nvim/tmp
+local temp_dir = vim.env.HOME .. "/.cache/nvim/tmp"
+vim.fn.mkdir(temp_dir, "p")
+
+-- Establecer variables de entorno para directorio temporal
+-- XDG_RUNTIME_DIR es usado por plenary.curl para archivos temporales
+vim.env.TMPDIR = temp_dir
+vim.env.TEMP = temp_dir
+vim.env.TMP = temp_dir
+vim.env.XDG_RUNTIME_DIR = temp_dir
+
+-- Override de vim.fn.tempname() para usar nuestro directorio
+-- Esto afecta a TODAS las llamadas que generen archivos temporales
+local original_tempname = vim.fn.tempname
+vim.fn.tempname = function()
+    local temp = original_tempname()
+    -- Si tempname devuelve algo en /tmp, redirigir a nuestro directorio
+    if temp and temp:match("^/tmp/") then
+        local filename = vim.fn.fnamemodify(temp, ":t")
+        return temp_dir .. "/" .. filename
+    end
+    return temp
+end
+
+-- ============================================
 -- Opciones generales
 -- ============================================
 
@@ -30,7 +58,9 @@ o.autoindent = true -- Copiar sangría de la línea anterior
 o.smartindent = true -- Sangría inteligente
 
 -- Líneas y columnas
-o.wrap = false -- No ajustar líneas
+o.wrap = true -- Ajustar líneas largas
+o.linebreak = true -- Romper en límites de palabras
+o.breakindent = true -- Sangrar líneas envueltas
 o.scrolloff = 8 -- Líneas de margen al hacer scroll
 o.sidescrolloff = 8 -- Columnas de margen al hacer scroll lateral
 

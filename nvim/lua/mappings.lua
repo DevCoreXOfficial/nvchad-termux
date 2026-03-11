@@ -49,14 +49,28 @@ map("n", "<leader>fq", ":%!psqlformat --spaces=2<CR>", { desc = "Formatear SQL" 
 -- IA y asistentes
 -- ============================================
 
--- NeoAI Toggle Window
-map("n", "<Space>ai", ":NeoAIToggle<CR>", opts)
+-- CodeCompanion
 
--- NeoAI Context Window
-map("n", "<Space>ac", ":NeoAIContextOpen<CR>", opts)
+-- Abrir chat de CodeCompanion
+map("n", "<leader>aa", ":CodeCompanionChat<CR>", { desc = "CodeCompanion: Abrir chat" })
 
--- Neural Open Chat
-map("n", "<leader>ne", ":Neural<CR>", opts)
+-- Chat con selección (modo visual) - Agrega el código seleccionado como contexto
+map("v", "<leader>aa", ":CodeCompanionChat<CR>", { desc = "CodeCompanion: Chat con selección" })
+
+-- Inline: Transformar código seleccionado (modo visual)
+map("v", "<leader>ai", ":CodeCompanion<CR>", { desc = "CodeCompanion: Transformar selección" })
+
+-- Inline: Crear código nuevo (modo normal)
+map("n", "<leader>ai", ":CodeCompanion<CR>", { desc = "CodeCompanion: Crear código inline" })
+
+-- Toggle chat (mostrar/ocultar)
+map("n", "<leader>at", ":CodeCompanionChat -t<CR>", { desc = "CodeCompanion: Toggle chat" })
+
+-- Abrir menú de acciones (slas commands, agentes, etc.)
+map("n", "<leader>am", ":CodeCompanionActions<CR>", { desc = "CodeCompanion: Menú de acciones" })
+
+-- Cambiar adapter (proveedor de IA)
+map("n", "<leader>as", ":CodeCompanionChat -s<CR>", { desc = "CodeCompanion: Cambiar adapter" })
 
 -- ============================================
 -- GitHub Copilot

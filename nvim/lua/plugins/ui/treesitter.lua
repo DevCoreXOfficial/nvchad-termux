@@ -3,31 +3,26 @@
 
 return {
   "nvim-treesitter/nvim-treesitter",
+  branch = "main",
   event = "BufReadPre",
   build = ":TSUpdate",
-  opts = {
-    ensure_installed = {
-      -- Lenguajes web básicos
+  config = function()
+    -- Setup solo acepta install_dir, nada más
+    require("nvim-treesitter").setup()
+
+    -- Instalar parsers
+    local parsers = {
       "html",
       "css",
-      "scss",
       "javascript",
       "typescript",
       "tsx",
-      "jsx",
-
-      -- Backend y scripting
       "bash",
-      "sh",
-
-      -- Datos y documentación
       "json",
       "markdown",
       "markdown_inline",
       "yaml",
       "toml",
-
-      -- Lenguajes recomendados para desarrollador web
       "lua",
       "vim",
       "vimdoc",
@@ -36,31 +31,25 @@ return {
       "gitignore",
       "regex",
       "query",
-    },
+    }
+    require("nvim-treesitter.install").install(parsers)
 
-    -- Configuración de resaltado
-    highlight = {
-      enable = true,
-      additional_vim_regex_highlighting = false,
-    },
+    -- Highlight e indent via autocmd (nueva forma)
+    vim.api.nvim_create_autocmd("FileType", {
+      callback = function(ev)
+        -- Activa treesitter highlight
+        local ok = pcall(vim.treesitter.start, ev.buf)
 
-    -- Indentación basada en treesitter
-    indent = {
-      enable = true,
-    },
+        -- Activa indent
+        if ok then
+          vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end
+      end,
+    })
 
-    -- Incremental selection
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = "<C-space>",
-        node_incremental = "<C-space>",
-        scope_incremental = false,
-        node_decremental = "<bs>",
-      },
-    },
-  },
-  config = function(_, opts)
-    require("nvim-treesitter.configs").setup(opts)
+    -- incremental selection
+    vim.keymap.set("n", "<C-space>", function()
+      require("nvim-treesitter.incremental_selection").init_selection()
+    end, { silent = true })
   end,
 }

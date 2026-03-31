@@ -27,4 +27,8 @@ npm_installed "prettier" || npm install -g prettier
 cp -r ./nvim ~/.config
 
 # Start Neovim
-nvim
+nvim --headless "+Lazy! sync" +qa
+nvim --headless "+Lazy! clean nvim-treesitter" +qa
+nvim --headless "+Lazy! install nvim-treesitter" +qa
+
+echo -e "\nNvChad installation complete! You can start Neovim by running 'nvim' in your terminal.\n"

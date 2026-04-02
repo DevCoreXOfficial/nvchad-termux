@@ -43,7 +43,7 @@ end, { desc = "Formatear con Prettier" })
 map("n", "<leader>fs", ":%!shfmt<CR>", { desc = "Formatear Bash con shfmt" })
 
 -- Formatear SQL con psqlformat
-map("n", "<leader>fq", ":%!psqlformat --spaces=2<CR>", { desc = "Formatear SQL" })
+map("n", "<leader>fq", ":%!psqlformat --spaces=2 %<CR>", { desc = "Formatear SQL" })
 
 -- ============================================
 -- IA y asistentes

@@ -5,6 +5,7 @@ return {
   -- GitHub Copilot
   {
     "github/copilot.vim",
+    commit = "0668308e68b0ac28b332b204b469fbe04601536a",
     lazy = false,
     config = function()
       vim.g.copilot_no_tab_map = true
@@ -21,7 +22,7 @@ return {
     },
     event = "VeryLazy",
     config = function()
-      require("codecompanion").setup({
+      require("codecompanion").setup {
         adapters = {
           -- OpenAI
           openai = function()
@@ -82,7 +83,7 @@ return {
             },
           },
         },
-      })
+      }
     end,
   },
 }

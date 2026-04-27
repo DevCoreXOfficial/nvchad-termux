@@ -5,7 +5,7 @@ return {
   -- GitHub Copilot
   {
     "github/copilot.vim",
-    commit = "0668308e68b0ac28b332b204b469fbe04601536a",
+    commit = "dfe0a3a1c256167d181488a73ec6ccab8d8931a9",
     lazy = false,
     config = function()
       vim.g.copilot_no_tab_map = true

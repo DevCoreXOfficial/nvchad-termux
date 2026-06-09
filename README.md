@@ -34,22 +34,30 @@
 - **Ghost Text** - Inline suggestion display
 
 ### 🎨 Language Support (LSP)
-- HTML & CSS Language Servers
-- TypeScript/JavaScript (ts_ls)
-- TailwindCSS
+- **On-demand LSP loading** - Servers install and activate when you open a file
+- HTML, CSS, TypeScript/JavaScript (ts_ls), TailwindCSS
+- Python, Go, C/C++, PHP, Rust, Kotlin, SQL, Dockerfile
+- Bash/Shell (bashls), Lua (lua_ls), JSON (jsonls), YAML (yamlls)
 - ESLint integration
 - Auto-closing tags for HTML/JSX/TSX
 
 ### 🛠 Code Formatting
 - **Prettier** - JavaScript, TypeScript, CSS, HTML, JSON, Markdown, YAML
 - **stylua** - Lua formatting
-- **shfmt** - Bash/Shell script formatting
+- **shfmt** - Bash/Shell/Zsh script formatting
 - **pg_format** - SQL formatting
+- **black** - Python formatting
+- **gofmt/goimports** - Go formatting
+- **clang-format** - C/C++ formatting
+- **rustfmt** - Rust formatting
+- **php_cs_fixer** - PHP formatting
+- **ktfmt** - Kotlin formatting
 
 ### 🌳 Syntax & Navigation
 - **Treesitter** - Advanced syntax highlighting and code navigation
 - **Incremental Selection** - Expand/shrink code selections with `<C-space>` / `<bs>`
 - **Auto-closing Tags** - HTML/JSX tag auto-completion
+- **Code Folding** - Fold code blocks with `nvim-ufo` (Treesitter + indent providers)
 
 ### 🖥 UI Enhancements
 - **Eldritch Theme** - Dark, eye-friendly color scheme
@@ -180,11 +188,11 @@ nvim/
 
 ### Code Formatting
 
-| Key | Description |
-|-----|-------------|
-| `<leader>fm` | Format file with Prettier/conform.nvim |
-| `<leader>fs` | Format Bash script with shfmt |
-| `<leader>fq` | Format SQL with pg_format |
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>fm` | Normal | Format file with conform.nvim |
+| `<leader>fs` | Normal | Format with shfmt (bash/sh/zsh only) |
+| `<leader>fq` | Normal | Format SQL with pg_format (sql only) |
 
 ### AI Assistants
 
@@ -204,6 +212,14 @@ nvim/
 | `Ctrl+j` | Next suggestion |
 | `Ctrl+k` | Previous suggestion |
 | `Ctrl+h` | Dismiss suggestion |
+
+### Code Folding (nvim-ufo)
+
+| Key | Description |
+|-----|-------------|
+| `<leader>z` | Toggle fold under cursor |
+| `<leader>zR` | Open all folds |
+| `<leader>zM` | Close all folds |
 
 ### Search & Navigation (Telescope)
 
@@ -345,12 +361,20 @@ To change provider, use `<leader>as` or configure the default adapter in `lua/pl
 | TypeScript | ts_ls | Prettier | Autocompletion, diagnostics, inlay hints |
 | HTML | html-lsp | Prettier | Auto-tags, completion |
 | CSS | cssls | Prettier | Autocompletion, Tailwind support |
-| Lua | lua-language-server | stylua | Autocompletion, diagnostics |
-| Bash | bashls | shfmt | Shell formatting |
-| SQL | - | pg_format | SQL formatting |
-| JSON | - | Prettier | Formatting |
+| TailwindCSS | tailwindcss | - | CSS class completion, language detection |
+| Lua | lua_ls | stylua | Autocompletion, diagnostics |
+| Bash/Shell/Zsh | bashls | shfmt | Shell formatting |
+| Python | pyright | black | Autocompletion, diagnostics, on-demand install |
+| Go | gopls | gofmt, goimports | Autocompletion, diagnostics, on-demand install |
+| C/C++ | clangd | clang-format | Autocompletion, diagnostics, on-demand install |
+| PHP | intelephense | php_cs_fixer | Autocompletion, diagnostics, on-demand install |
+| Rust | rust_analyzer | rustfmt | Autocompletion, diagnostics, on-demand install |
+| Kotlin | kotlin_language_server | ktfmt | Autocompletion, diagnostics, on-demand install |
+| SQL | sqls | pg_format | SQL formatting, on-demand install |
+| JSON | jsonls | Prettier | Autocompletion, formatting |
+| YAML | yamlls | Prettier | Autocompletion, formatting |
 | Markdown | - | Prettier | Formatting |
-| YAML | - | Prettier | Formatting |
+| Dockerfile | dockerls | - | Autocompletion, diagnostics |
 
 ### Treesitter Syntax Support
 
@@ -369,7 +393,7 @@ Treesitter provides enhanced syntax highlighting and code navigation for:
 
 **Development Tools:**
 - Lua, Vim, Vimdoc
-- SQL, Dockerfile
+- Dockerfile
 - Gitignore, Regex, Query
 
 **Keybindings:**
@@ -378,6 +402,17 @@ Treesitter provides enhanced syntax highlighting and code navigation for:
 |-----|-------------|
 | `<C-space>` | Incremental selection (expand) |
 | `<bs>` | Decremental selection (shrink) |
+| `<leader>z` | Toggle code fold |
+
+### On-Demand LSP Installation
+
+LSP servers for Python, Go, C/C++, PHP, Rust, Kotlin, SQL, and others are **installed lazily** when you first open a file of that type. The system:
+1. Installs the language runtime via Termux (e.g., `python`, `golang`, `clang`)
+2. Installs the LSP server and formatters via Mason
+3. Installs the Treesitter parser
+4. Enables the LSP once the binary is available
+
+Manual reinstall for any language: `:ReinstallLang {lang}` (e.g., `:ReinstallLang python`)
 
 ### Inlay Hints (TypeScript/JavaScript)
 
@@ -411,8 +446,14 @@ format_on_save = {
 |-----------|------------|---------|
 | Prettier | JS, TS, CSS, HTML, JSON, MD, YAML | `<leader>fm` |
 | stylua | Lua | Auto (conform.nvim) |
-| shfmt | Bash/Shell | `<leader>fs` |
+| shfmt | Bash/Shell/Zsh | `<leader>fs` |
 | pg_format | SQL | `<leader>fq` |
+| black | Python | Auto (conform.nvim) |
+| gofmt + goimports | Go | Auto (conform.nvim) |
+| clang-format | C/C++ | Auto (conform.nvim) |
+| rustfmt | Rust | Auto (conform.nvim) |
+| php_cs_fixer | PHP | Auto (conform.nvim) |
+| ktfmt | Kotlin | Auto (conform.nvim) |
 
 ### Custom Formatters
 
@@ -468,6 +509,12 @@ Displays:
 
 - Character: `│`
 - Scope highlighting enabled
+
+### Code Folding (nvim-ufo)
+
+- Providers: Treesitter (preferred), Indent (fallback)
+- Folds are preserved across sessions
+- Fold levels start unfolded (`foldlevel=99`)
 
 ### Notifications
 
@@ -644,6 +691,8 @@ nvim
 - [which-key.nvim](https://github.com/folke/which-key.nvim) - Key helper
 - [nvim-scrollbar](https://github.com/petertriho/nvim-scrollbar) - Scrollbar
 - [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) - Icons
+- [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo) - Code folding (Treesitter + indent)
+- [promise-async](https://github.com/kevinhwang91/promise-async) - Async utilities (nvim-ufo dependency)
 
 ### Navigation & Diagnostics
 - [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) - Fuzzy finder

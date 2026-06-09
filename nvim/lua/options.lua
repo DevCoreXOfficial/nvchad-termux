@@ -79,6 +79,10 @@ o.undolevels = 10000 -- Máximo nivel de undo
 o.timeoutlen = 300 -- Tiempo para mapeos (ms)
 o.updatetime = 200 -- Tiempo para trigger de eventos (ms)
 
+-- Plegado de código
+o.foldlevel = 99 -- No plegar nada al abrir un archivo
+o.foldlevelstart = 99
+
 -- Colores y apariencia
 o.termguicolors = true -- Soporte para colores true color
 o.signcolumn = "yes" -- Siempre mostrar columna de signos

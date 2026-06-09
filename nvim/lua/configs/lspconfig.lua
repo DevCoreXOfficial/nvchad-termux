@@ -7,8 +7,6 @@ local nvlsp = require "nvchad.configs.lspconfig"
 -- Servidores por defecto (siempre habilitados)
 -- ============================================
 local default_servers = {
-  "html",
-  "cssls",
   "bashls",
 }
 
@@ -43,8 +41,6 @@ vim.lsp.config("tailwindcss", {
     },
   },
 })
-vim.lsp.enable("tailwindcss")
-
 -- Config personalizada para ts_ls con inlayHints
 vim.lsp.config("ts_ls", {
   on_attach = nvlsp.on_attach,
@@ -226,6 +222,26 @@ vim.api.nvim_create_autocmd("FileType", {
           if ok3 and not pkg_fmt:is_installed() then
             vim.notify(string.format("Instalando formatter %s...", fm), vim.log.levels.INFO)
             pkg_fmt:install()
+          end
+        end
+      end
+
+      -- TailwindCSS: instalar y habilitar para archivos web
+      local web_fts = { "html", "css", "javascript", "typescript", "javascriptreact", "typescriptreact" }
+      if vim.tbl_contains(web_fts, ft) then
+        local ok4, tw_pkg = pcall(mason_registry.get_package, "tailwindcss-language-server")
+        if ok4 then
+          if not tw_pkg:is_installed() and not lazy_installing["tailwindcss-language-server"] then
+            lazy_installing["tailwindcss-language-server"] = true
+            vim.notify("Instalando tailwindcss-language-server via Mason...", vim.log.levels.INFO)
+            tw_pkg:on("install:success", function()
+              vim.schedule(function()
+                pcall(vim.lsp.enable, "tailwindcss")
+              end)
+            end)
+            tw_pkg:install()
+          elseif tw_pkg:is_installed() then
+            pcall(vim.lsp.enable, "tailwindcss")
           end
         end
       end

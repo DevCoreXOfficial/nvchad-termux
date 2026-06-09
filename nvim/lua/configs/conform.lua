@@ -18,7 +18,6 @@ local options = {
     go = { "gofmt", "goimports" },
     c = { "clang-format" },
     cpp = { "clang-format" },
-    php = { "php_cs_fixer" },
     rust = { "rustfmt" },
     kotlin = { "ktfmt" },
   },

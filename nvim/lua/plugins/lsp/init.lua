@@ -16,10 +16,7 @@ return {
     event = "VeryLazy",
     opts = {
       ensure_installed = {
-        "html-lsp",
-        "css-lsp",
         "prettier",
-        "tailwindcss-language-server",
         "typescript-language-server",
         "eslint-lsp",
         "eslint_d",

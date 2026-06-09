@@ -50,7 +50,6 @@
 - **gofmt/goimports** - Go formatting
 - **clang-format** - C/C++ formatting
 - **rustfmt** - Rust formatting
-- **php_cs_fixer** - PHP formatting
 - **ktfmt** - Kotlin formatting
 
 ### 🌳 Syntax & Navigation
@@ -367,7 +366,7 @@ To change provider, use `<leader>as` or configure the default adapter in `lua/pl
 | Python | pyright | black | Autocompletion, diagnostics, on-demand install |
 | Go | gopls | gofmt, goimports | Autocompletion, diagnostics, on-demand install |
 | C/C++ | clangd | clang-format | Autocompletion, diagnostics, on-demand install |
-| PHP | intelephense | php_cs_fixer | Autocompletion, diagnostics, on-demand install |
+| PHP | intelephense | — | Autocompletion, diagnostics, on-demand install |
 | Rust | rust_analyzer | rustfmt | Autocompletion, diagnostics, on-demand install |
 | Kotlin | kotlin_language_server | ktfmt | Autocompletion, diagnostics, on-demand install |
 | SQL | sqls | pg_format | SQL formatting, on-demand install |
@@ -452,7 +451,7 @@ format_on_save = {
 | gofmt + goimports | Go | Auto (conform.nvim) |
 | clang-format | C/C++ | Auto (conform.nvim) |
 | rustfmt | Rust | Auto (conform.nvim) |
-| php_cs_fixer | PHP | Auto (conform.nvim) |
+
 | ktfmt | Kotlin | Auto (conform.nvim) |
 
 ### Custom Formatters

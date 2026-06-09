@@ -227,28 +227,38 @@ vim.api.nvim_create_autocmd("FileType", {
       end
 
       -- TailwindCSS: instalar y habilitar para archivos web
-      local web_fts = { "html", "css", "javascript", "typescript", "javascriptreact", "typescriptreact" }
-      if vim.tbl_contains(web_fts, ft) then
-        local ok4, tw_pkg = pcall(mason_registry.get_package, "tailwindcss-language-server")
-        if ok4 then
-          if not tw_pkg:is_installed() and not lazy_installing["tailwindcss-language-server"] then
-            lazy_installing["tailwindcss-language-server"] = true
-            vim.notify("Instalando tailwindcss-language-server via Mason...", vim.log.levels.INFO)
-            tw_pkg:on("install:success", function()
-              vim.schedule(function()
-                pcall(vim.lsp.enable, "tailwindcss")
+      pcall(function()
+        local web_fts = { "html", "css", "javascript", "typescript", "javascriptreact", "typescriptreact" }
+        if vim.tbl_contains(web_fts, ft) then
+          local ok4, tw_pkg = pcall(mason_registry.get_package, "tailwindcss-language-server")
+          if ok4 then
+            if not tw_pkg:is_installed() and not lazy_installing["tailwindcss-language-server"] then
+              lazy_installing["tailwindcss-language-server"] = true
+              vim.notify("Instalando tailwindcss-language-server via Mason...", vim.log.levels.INFO)
+              tw_pkg:on("install:success", function()
+                vim.schedule(function()
+                  pcall(vim.lsp.enable, "tailwindcss")
+                end)
               end)
-            end)
-            tw_pkg:install()
-          elseif tw_pkg:is_installed() then
-            pcall(vim.lsp.enable, "tailwindcss")
+              tw_pkg:install()
+            elseif tw_pkg:is_installed() then
+              pcall(vim.lsp.enable, "tailwindcss")
+            end
           end
         end
-      end
+      end)
 
       local ts_parser = cfg.ts
       if ts_parser then
-        if pcall(vim.treesitter.start, buf) then return end
+        local function parser_installed(lang)
+          local installed = require("nvim-treesitter").get_installed()
+          return vim.tbl_contains(installed, lang)
+        end
+
+        if parser_installed(ts_parser) then
+          pcall(vim.treesitter.start, buf)
+          return
+        end
 
         vim.notify(string.format("Instalando parser treesitter para %s...", ts_parser), vim.log.levels.INFO)
         vim.cmd("TSInstall " .. ts_parser)
@@ -259,8 +269,9 @@ vim.api.nvim_create_autocmd("FileType", {
           if done then return end
           n = n + 1
           if n > 15 then done = true; timer:close(); return end
-          if not pcall(vim.treesitter.start, buf) then return end
+          if not parser_installed(ts_parser) then return end
           done = true; timer:close()
+          pcall(vim.treesitter.start, buf)
           vim.notify(string.format("Parser %s listo", ts_parser), vim.log.levels.INFO)
         end))
       end

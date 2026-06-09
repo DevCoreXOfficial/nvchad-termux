@@ -71,7 +71,7 @@ vim.lsp.config("ts_ls", {
     },
   },
 })
-vim.lsp.enable("ts_ls")
+-- NOTA: ts_ls se habilita on-demand via FileType autocommand (no al startup)
 
 -- ============================================
 -- Helper: instalar paquete de Termux si no existe
